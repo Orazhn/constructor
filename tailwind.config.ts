@@ -25,7 +25,6 @@ const config: Config = {
 		// => @media (min-width: 1536px) { ... }
 	  },
   	extend: {
-
 		  fontFamily: {
 			mono: ['"Anonymous Pro"', 'monospace'], // Add Google font for use
 		  },
@@ -38,10 +37,15 @@ const config: Config = {
 			  '0%, 100%': { 'border-right-color': 'rgba(255, 255, 255, 0.75)' },
 			  '50%': { 'border-right-color': 'transparent' },
 			},
+			"shine": {
+			  from: { backgroundPosition: '200% 0' },
+			  to: { backgroundPosition: '-200% 0' },
+			},
 		  },
 		  animation: {
-			typewriter: 'typewriter 4s steps(44) 1s 1 normal both',
+			typewriter: 'typewriter 2s steps(44) 1s 1 normal both',
 			blinkTextCursor: 'blinkTextCursor 500ms steps(44) infinite normal',
+			"shine": "shine 8s ease-in-out infinite",
 		  },
 		  width: {
 			'24em': '24em',
@@ -95,5 +99,7 @@ const config: Config = {
   		}
   	}
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  plugins: [require('tailwindcss-motion')], 
 };
 export default config;

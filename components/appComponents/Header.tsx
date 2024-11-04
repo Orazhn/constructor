@@ -17,19 +17,20 @@ const Header: FC<IHeader> = ({sidebar, setOpenSidebar, text = 'Components'}) => 
   return (
         <header className="bg-slate-800 flex justify-evenly p-4 w-screen overflow-y-auto gap-4">
           {sidebar && setOpenSidebar && 
-          <Button className='justify-self-start' onClick={() => setOpenSidebar(prev => !prev)}>
-            <RxHamburgerMenu />
+          <Button className='text-md justify-self-start' onClick={() => setOpenSidebar(true)}>
+            <RxHamburgerMenu className='hover:motion-scale-out-125' />
           </Button>}
           <Button 
+            variant="expandIcon" Icon={RxComponent1} iconPlacement="left"
             className={`${text == 'Components' && 'underline decoration-blue-500 decoration-2 underline-offset-4'} font-mono`} 
             onClick={() => router.push('/')}>
-               <RxComponent1 className="text-white text-xl"/>  
+               
               {text}
           </Button> 
           <Button 
+            variant="expandIcon" Icon={IoDocumentTextOutline} iconPlacement="left"
             className={`${text != 'Components' && 'underline decoration-blue-500 decoration-2 underline-offset-4'} font-mono`}  
             onClick={() => router.push('webpreview')}>
-            <IoDocumentTextOutline />
             See the result
           </Button>
         </header>

@@ -4,21 +4,22 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 // Define the shape of the context
 interface ElementsContextType {
   elements: React.ReactNode[];
-  addElement: (newElement: React.ReactNode) => void;
+  addElement: (newElement: React.ReactNode) => void,
+  setElements: React.Dispatch<React.SetStateAction<React.ReactNode[]>>
 }
 
 // Create context with a default value of undefined
 const ElementsContext = createContext<ElementsContextType | undefined>(undefined);
 
 export const ElementsProvider = ({ children }: { children: ReactNode }) => {
-  const [elements, setElements] = useState<React.ReactNode[]>([]);
+  const [elements, setElements] = useState<React.ReactNode[]>([])
 
   const addElement = (newElement: React.ReactNode) => {
-    setElements(prev => [...prev, newElement]);
+    setElements(prev => [...prev, newElement]); 
   };
 
   return (
-    <ElementsContext.Provider value={{ elements, addElement }}>
+    <ElementsContext.Provider value={{ elements, addElement, setElements }}>
       {children}
     </ElementsContext.Provider>
   );

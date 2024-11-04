@@ -24,13 +24,13 @@ export default function Home() {
     <div className="flex flex-col">
       <Header setOpenSidebar={undefined} />
       <div className="pt-5 flex flex-col">
-      <div className="flex justify-center items-center">
-          <h1 className="text-center text-white font-mono  border-r-2 border-white overflow-hidden whitespace-nowrap animate-typewriter sm:text-lg md:text-xl">Build your website without code</h1>
+      <div className="flex justify-center items-center pt-5">
+          <h1 className="text-center text-white font-mono sm:text-lg md:text-2xl motion-duration-1500 motion-preset-confetti ">Build your website without code</h1>
         </div>
         <div className="flex flex-wrap w-screen justify-center">
         
         <div className="flex flex-wrap justify-center gap-5 pt-5">
-          <div className="w-auto bg-gray-800 p-2 ">
+          <div className="w-auto bg-gray-800 p-2">
             <Menubar/>
             <div className="pt-3">
              <Button onClick={() => addHandler(<Menubar/>)}>Add</Button>

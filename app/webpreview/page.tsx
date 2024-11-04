@@ -7,24 +7,51 @@ import Draggable from 'react-draggable';
 
 const Page = () => {
   const { elements } = useElements();
-  const [openSidebar, setOpenSidebar] = useState(false);
-  const [bgColor, setBgColor] = useState<string>('bg-white');
+  const [openSidebar, setOpenSidebar] = useState(true);
+  const [bgColor, setBgColor] = useState<string>(() =>  {
+    const bgColor = localStorage.getItem('bgColor');
+    return bgColor ? JSON.parse(bgColor) : 'white';
+  });
+  const [bgImage, setBgImage] = useState<string>(() =>  {
+    const bgImage = localStorage.getItem('bgImage');
+    return bgImage ? JSON.parse(bgImage) : null;
+  });
+  const [focus, setFocus] = useState<React.ReactNode>();
 
   return (
-    <div className='flex justify-center w-screen flex-col items-center'>
-      <Header sidebar={true} setOpenSidebar={setOpenSidebar} text='Get components'/>
-      {openSidebar && <Sidebar setBgColor={setBgColor} bgColor={bgColor} setOpenSidebar={setOpenSidebar} />}
-      <div className={`p-10 h-screen w-screen`} style={{ backgroundColor: bgColor }}>
-        <div className='list-none'> 
+    <div className="flex justify-center w-screen flex-col items-center">
+      <Header sidebar={true} setOpenSidebar={setOpenSidebar} text="Get components" />
+      {openSidebar && (
+        <Sidebar
+          setBgColor={setBgColor}
+          bgColor={bgColor}
+          setOpenSidebar={setOpenSidebar}
+          setBgImage={setBgImage}
+          focus={focus}
+          openSidebar = {openSidebar}
+        />
+      )}
+      <div
+        className={`p-10 h-screen w-screen ${bgImage ? 'bg-center bg-cover  bg-no-repeat' : ''}`}
+        style={{
+          background: bgImage ? `url(${bgImage}), ${bgColor}` : bgColor,
+        }}
+      >
+        <div className="list-none">
           {elements.map((element: React.ReactNode, index: number) => (
             <Draggable key={index}>
-              <li className='cursor-grab flex'>{element}</li>
+              <li
+                className="cursor-grab flex"
+                onClick={() => setFocus(element)}
+              >
+                {element}
+              </li>
             </Draggable>
           ))}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Page;
