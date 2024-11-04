@@ -8,7 +8,7 @@ interface SidebarProps {
     bgColor: string, 
     setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>, 
     openSidebar: boolean
-    setBgImage: React.Dispatch<React.SetStateAction<string>>,
+    setBgImage: React.Dispatch<React.SetStateAction<string | null>>,
     focus?: React.ReactNode 
 }
 
