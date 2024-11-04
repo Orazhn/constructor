@@ -13,12 +13,12 @@ interface SidebarProps {
 
 const DefaultSidebar:FC<SidebarProps> = ({setBgColor, bgColor, setOpenSidebar, setBgImage, openSidebar}) => {
 
-        const handleImageChange = async(e) => {
-            const file = e.target.files[0]
+        const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const file = e.target.files?.[0]
             if (file && file.type.startsWith('image/')) {
                 const url = URL.createObjectURL(file)
                 setBgImage(url); 
-                await localStorage.setItem('bgImage', JSON.stringify(url))
+                localStorage.setItem('bgImage', JSON.stringify(url))
             } else {
               alert("Please select a valid image file.");
             }
@@ -54,7 +54,7 @@ return (
                 <input
                     type="file"
                     accept="image/*"
-                    onChange={ handleImageChange}
+                    onChange={e => handleImageChange(e)}
                     className="bg-white text-white rounded-md"
                 />
             </li>
