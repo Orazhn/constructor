@@ -1,6 +1,7 @@
 import { Redis } from '@upstash/redis';
 import dotenv from 'dotenv';
 import { getAuth } from '@clerk/nextjs/server';
+import { NextRequest } from 'next/server';
 import DbType from '@/app/types/dbType';
 
 dotenv.config({ path: '.env.local' });
@@ -10,12 +11,12 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN!
 });
 
-async function GetUserData(req: Request) {
+async function GetUserData(req: NextRequest) {
   const { userId } = getAuth(req);
   return userId;
 }
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   const userId = await GetUserData(req);
   
   try {
@@ -37,7 +38,7 @@ export async function GET(req: Request) {
  
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const userId = await GetUserData(req);
   console.log(userId);
 
