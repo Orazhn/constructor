@@ -1,70 +1,59 @@
-'use client'
-import React from "react"
-import { Button } from "@/components/ui/button"
-import Menubar from "@/components/webcomponents/Menubar"
-import Calendar from "@/components/webcomponents/Calendar"
-import DatePicker  from "@/components/webcomponents/DatePicker"
-import { useElements } from "./context/ElementContext"
-import Header from "@/components/appComponents/Header"
-import CarouselDemo from "@/components/webcomponents/Carousel"
-import CardWithForm from "@/components/webcomponents/Card"
+import React from 'react'
+import { Button } from "@/components/ui/button";
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  SignUpButton
+} from '@clerk/nextjs'
+import { IoIosLogIn } from "react-icons/io";
+import { currentUser } from '@clerk/nextjs/server';
+import StartBuildingButton from '@/components/appComponents/StardBuildingButton';
 
 
 
-
-
-
-export default function Home() {
-  const { addElement } = useElements();
-
-  const addHandler = (element: React.JSX.Element) => {
-    addElement(element)
-  }
+const page = async() => {
+  const user = await currentUser();
+  const username = user?.username
   return (
-    <div className="flex flex-col">
-      <Header setOpenSidebar={undefined} />
-      <div className="pt-5 flex flex-col">
-      <div className="flex justify-center items-center pt-5">
-          <h1 className="text-center text-white font-mono sm:text-lg md:text-2xl motion-duration-1500 motion-preset-confetti ">Build your website without code</h1>
+    <div className='flex flex-col h-screen w-screen justify-center items-center bg-black'>
+        <header className="py-2  w-screen fixed top-0">
+          <div className='flex justify-evenly w-full '>
+            <SignedOut>
+               <Button className="text-xl bg-white text-black hover:bg-slate-200"> <SignInButton/></Button>
+            </SignedOut>
+            <SignedOut>
+               <Button className="text-xl bg-white text-black hover:bg-slate-200"> <SignUpButton/></Button>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
+        </header>
+        <div className='flex flex-col justify-center items-center gap-5'>
+          <div className='font-mono text-white text-5xl flex justify-center flex-col items-center gap-2'>
+            <h1 className='text-center '>{username ? `Welcome back, ${username}` : 'Welcome to online web builder app'}</h1>
+            <p className='text-4xl motion-preset-shake motion-delay-1000'>👋</p>
+          </div>
+              {
+              user ?
+              <StartBuildingButton/> : 
+              <Button 
+                className="text-xl bg-slate-100 text-black hover:bg-slate-50 w-36" 
+                variant="expandIcon" Icon={IoIosLogIn} iconPlacement="right"
+              >
+                <SignUpButton/>
+              </Button>
+              
+              }
+            
         </div>
-        <div className="flex flex-wrap w-screen justify-center">
-        
-        <div className="flex flex-wrap justify-center gap-5 pt-5">
-          <div className="w-auto bg-gray-800 p-2">
-            <Menubar/>
-            <div className="pt-3">
-             <Button onClick={() => addHandler(<Menubar/>)}>Add</Button>
-            </div>
-          </div>
-          <div className=" bg-gray-800 p-2">
-            <Calendar/>
-            <div className="pt-3">
-             <Button onClick={() => addHandler(<Calendar/>)}>Add</Button>
-            </div>
-          </div>
-          <div className="w-auto bg-gray-800 p-2">
-            <DatePicker/>
-            <div className="pt-3">
-             <Button onClick={() => addHandler(<DatePicker/>)}>Add</Button>
-            </div>
-          </div>
-          <div className="w-auto bg-gray-800 p-2 ">
-            <CarouselDemo/>
-            <div className="pt-3">
-             <Button onClick={() => addHandler(<CarouselDemo/>)}>Add</Button>
-            </div>
-          </div>
-          <div className="w-auto bg-gray-800 p-2 ">
-            <CardWithForm/>
-            <div className="pt-3">
-             <Button onClick={() => addHandler(<CardWithForm/>)}>Add</Button>
-            </div>
-          </div>
-        </div>
-        
-        </div>
-      </div>
-    
+      
+      
+
     </div>
   )
 }
+
+export default page

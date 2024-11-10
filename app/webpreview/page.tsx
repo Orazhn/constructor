@@ -3,30 +3,22 @@ import React, { useState, useEffect } from 'react';
 import { useElements } from '../context/ElementContext';
 import Header from '@/components/appComponents/Header';
 import Sidebar from '@/components/appComponents/Sidebar';
-import Draggable from 'react-draggable'; 
+import {Rings} from 'react-loading-icons'
+import { Toaster } from 'react-hot-toast';
+
 
 const Page = () => {
-  const { elements } = useElements();
-  const [openSidebar, setOpenSidebar] = useState(true);
-  const [bgColor, setBgColor] = useState<string>('white');
-  const [bgImage, setBgImage] = useState<string | null>(null);
-  const [focus, setFocus] = useState<React.ReactNode>();
+  const { elements, loading, dbBgColor } = useElements();
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const [bgColor, setBgColor] = useState<string>('');
+  
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      
-      const storedBgColor = localStorage.getItem('bgColor');
-      const storedBgImage = localStorage.getItem('bgImage');
-
-      if (storedBgColor) {
-        setBgColor(JSON.parse(storedBgColor));
-      }
-
-      if (storedBgImage) {
-        setBgImage(JSON.parse(storedBgImage));
-      }
+    if (!loading) {
+      setBgColor(dbBgColor);
     }
-  }, []);
+    
+  }, [loading]);
 
   return (
     <div className="flex justify-center w-screen flex-col items-center">
@@ -36,30 +28,32 @@ const Page = () => {
           setBgColor={setBgColor}
           bgColor={bgColor}
           setOpenSidebar={setOpenSidebar}
-          setBgImage={setBgImage}
-          focus={focus}
           openSidebar={openSidebar}
         />
       )}
       <div
-        className={`p-10 h-screen w-screen ${bgImage ? 'bg-center bg-cover bg-no-repeat' : ''}`}
+        className={` w-screen ${elements ? 'h-screen' : 'h-auto'}`}
         style={{
-          background: bgImage ? `url(${bgImage}), ${bgColor}` : bgColor,
-        }}
-      >
-        <div className="list-none">
-          {elements.map((element: React.ReactNode, index: number) => (
-            <Draggable key={index}>
-              <li
-                className="cursor-grab flex"
-                onClick={() => setFocus(element)}
-              >
-                {element}
-              </li>
-            </Draggable>
-          ))}
+          background: bgColor,
+        }}>
+        {loading ? 
+          <div className='flex w-screen h-screen justify-center items-center'>
+            <Rings className='text-xl'/>
+          </div>
+           :
+          <div className="list-none flex flex-col w-full items-center justify-center gap-2 pt-3">
+            {elements.map((element: React.ReactNode, index: number) => 
+              <div  key={index}>
+                  <li
+                    className="flex">
+                    {element}
+                  </li>
+              </div>
+            )}
+          </div>
+        }
         </div>
-      </div>
+        <Toaster />
     </div>
   );
 };

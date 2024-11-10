@@ -26,29 +26,7 @@ const config: Config = {
 	  },
   	extend: {
 		  fontFamily: {
-			mono: ['"Anonymous Pro"', 'monospace'], // Add Google font for use
-		  },
-		  keyframes: {
-			typewriter: {
-			  '0%': { width: '0' },
-			  '100%': { width: '19em' },
-			},
-			blinkTextCursor: {
-			  '0%, 100%': { 'border-right-color': 'rgba(255, 255, 255, 0.75)' },
-			  '50%': { 'border-right-color': 'transparent' },
-			},
-			"shine": {
-			  from: { backgroundPosition: '200% 0' },
-			  to: { backgroundPosition: '-200% 0' },
-			},
-		  },
-		  animation: {
-			typewriter: 'typewriter 2s steps(44) 1s 1 normal both',
-			blinkTextCursor: 'blinkTextCursor 500ms steps(44) infinite normal',
-			"shine": "shine 8s ease-in-out infinite",
-		  },
-		  width: {
-			'24em': '24em',
+			mono: ['"Anonymous Pro"', 'monospace'], 
 		  },
   		colors: {
   			background: 'hsl(var(--background))',
